@@ -77,4 +77,11 @@ final appMenuItems = <MenuItem>[
     link: '/infinte-scroll',
     icon: Icons.list_alt_rounded,
   ),
+
+  MenuItem(
+    title: 'Themee Changer',
+    subTitle: "Change app's theme",
+    link: '/theme-changer',
+    icon: Icons.color_lens_rounded,
+  ),
 ];
