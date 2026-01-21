@@ -36,40 +36,30 @@ class _ThemeChangerView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Color> colors = ref.watch(colorThemeProvider);
-
+    final int selectedColor = ref.watch(selectedColorThemeProvider);
     return ListView.builder(
       itemCount: colors.length,
       itemBuilder: (context, index) {
         final Color color = colors[index];
-
         return RadioGroup(
-          onChanged: (val) => onChanged?.call(val!),
-          groupValue: selectedTransportation,
+          onChanged: (val) => {
+            if (val != null)
+              ref
+                  .read(selectedColorThemeProvider.notifier)
+                  .selectedColorTheme(val),
+          },
+          groupValue: selectedColor == index ? index : null,
           child: Column(
             children: [
               RadioListTile(
-                title: const Text('By Car'),
-                subtitle: const Text('Viajar por carro'),
-                value: Transportation.car,
-              ),
-              RadioListTile(
-                title: const Text('By Boat'),
-                subtitle: const Text('Viajar por barco'),
-                value: Transportation.boat,
-              ),
-              RadioListTile(
-                title: const Text('By Plane'),
-                subtitle: const Text('Viajar por avión'),
-                value: Transportation.plane,
-              ),
-              RadioListTile(
-                title: const Text('By Submarine'),
-                subtitle: const Text('Viajar por submarino'),
-                value: Transportation.submarine,
+                title: Text('Este color', style: TextStyle(color: color)),
+                subtitle: Text('${color.toARGB32()}'),
+                activeColor: color,
+                value: index,
               ),
             ],
           ),
-        ),
+        );
       },
     );
   }
