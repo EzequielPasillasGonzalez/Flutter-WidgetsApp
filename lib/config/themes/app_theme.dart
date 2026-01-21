@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-const colorList = <Color>[
-  Colors.red,
-  Colors.green,
-  Colors.blue,
-  Colors.yellow,
-  Colors.orange,
-];
-
 class AppTheme {
   final int selectedColor;
   final bool isDarkMode;
+
+  static const colorList = <Color>[
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.yellow,
+    Colors.orange,
+  ];
 
   AppTheme({this.selectedColor = 0, this.isDarkMode = false})
     : assert(
@@ -21,6 +21,12 @@ class AppTheme {
   ThemeData getTheme() => ThemeData(
     colorSchemeSeed: colorList[selectedColor],
     brightness: isDarkMode ? Brightness.dark : Brightness.light,
-    appBarTheme: AppBarTheme(centerTitle: false),
+    appBarTheme: const AppBarTheme(centerTitle: false),
+  );
+
+  AppTheme copyWith({int? selectedColor, bool? isDarkMode}) => AppTheme(
+    //* Si se recibe un valor nuevo lo usa, sino usa el valor actual
+    selectedColor: selectedColor ?? this.selectedColor,
+    isDarkMode: isDarkMode ?? this.isDarkMode,
   );
 }
